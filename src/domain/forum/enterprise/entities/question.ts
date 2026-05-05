@@ -83,7 +83,7 @@ export class Question extends Entity<Optional<QuestionProps, 'createdAt'>> {
   }
 
   static create(
-    props: Optional<QuestionProps, 'createdAt'>,
+    props: Optional<QuestionProps, 'createdAt' | 'slug'>,
     id?: UniqueEntityID,
   ) {
     const question = new Question(
