@@ -1,8 +1,8 @@
 export class Slug {
-  public value: string;
+  public value: string
 
   constructor(value: string) {
-    this.value = value;
+    this.value = value
   }
 
   /**
@@ -19,8 +19,8 @@ export class Slug {
       .toLowerCase()
       .trim()
       .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
+      .replace(/^-+|-+$/g, '')
 
-    return new Slug(slug);
+    return new Slug(slug)
   }
 }

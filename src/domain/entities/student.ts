@@ -1,23 +1,23 @@
-import { Entity } from '@/core/entities/entity';
-import type { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import type { Optional } from '@/core/types/optional';
+import { Entity } from '@/core/entities/entity'
+import type { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import type { Optional } from '@/core/types/optional'
 
 interface StudentProps {
-  name: string;
-  createdAt: Date;
-  updatedAt?: Date | undefined;
+  name: string
+  createdAt: Date
+  updatedAt?: Date | undefined
 }
 
 export class Student extends Entity<Optional<StudentProps, 'createdAt'>> {
   get name() {
-    return this.props.name;
+    return this.props.name
   }
 
   protected constructor(
     props: Optional<StudentProps, 'createdAt'>,
     id?: UniqueEntityID,
   ) {
-    super(props, id);
+    super(props, id)
   }
 
   static create(
@@ -31,8 +31,8 @@ export class Student extends Entity<Optional<StudentProps, 'createdAt'>> {
         updatedAt: props?.updatedAt ?? undefined,
       },
       id,
-    );
+    )
 
-    return student;
+    return student
   }
 }
