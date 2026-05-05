@@ -1,5 +1,5 @@
 import { Slug } from '@/domain/forum/enterprise/entities/value-objects/slug'
-import { makeQuestion } from 'test/make-question'
+import { makeQuestion } from 'test/factories/make-question'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { FindQuestionBySlugUseCase } from './find-question-by-slug'
 
