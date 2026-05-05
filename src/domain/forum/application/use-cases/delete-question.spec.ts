@@ -40,4 +40,23 @@ describe('Delete Question', () => {
       newQuestionId,
     )
   })
+
+  it('should not be able to delete a question with wrong author', async () => {
+    const newQuestionId = new UniqueEntityID('question-1').toString()
+    const { question: newQuestion } = await makeQuestion(
+      {
+        slug: Slug.create('question-1'),
+      },
+      newQuestionId,
+    )
+
+    await inMemoryQuestionsRepository.create(newQuestion)
+
+    await expect(() =>
+      sut.execute({
+        authorId: new UniqueEntityID('author-2').toString(),
+        questionId: newQuestion.id,
+      }),
+    ).rejects.toThrow('You are not the author of this question')
+  })
 })
