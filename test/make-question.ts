@@ -1,16 +1,23 @@
+import { faker } from '@faker-js/faker'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import {
   Question,
   type QuestionProps,
 } from '@/domain/forum/enterprise/entities/question'
 
-export async function makeQuestion(override?: Partial<QuestionProps>) {
-  const question = Question.create({
-    authorId: new UniqueEntityID('author-1'),
-    title: 'This is a question',
-    content: 'This is the content of the question.',
-    ...override,
-  })
+export async function makeQuestion(
+  override?: Partial<QuestionProps>,
+  id?: string,
+) {
+  const question = Question.create(
+    {
+      authorId: new UniqueEntityID(faker.string.uuid()),
+      title: faker.lorem.sentence(),
+      content: faker.lorem.text(),
+      ...override,
+    },
+    id ? new UniqueEntityID(id) : undefined,
+  )
 
   return { question }
 }
