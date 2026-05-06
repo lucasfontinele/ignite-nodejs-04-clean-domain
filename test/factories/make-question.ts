@@ -5,10 +5,7 @@ import {
   type QuestionProps,
 } from '@/domain/forum/enterprise/entities/question'
 
-export async function makeQuestion(
-  override?: Partial<QuestionProps>,
-  id?: string,
-) {
+export function makeQuestion(override?: Partial<QuestionProps>, id?: string) {
   const question = Question.create(
     {
       authorId: new UniqueEntityID(faker.string.uuid()),
