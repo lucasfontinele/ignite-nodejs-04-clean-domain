@@ -1,5 +1,5 @@
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
-import type { AnswersRepository } from '../repositories/answers-repository'
+import type { AnswersRepository } from '@/domain/forum/application/repositories/answers-repository'
 
 interface AnswerQuestionUseCaseRequest {
   instructorId: string
