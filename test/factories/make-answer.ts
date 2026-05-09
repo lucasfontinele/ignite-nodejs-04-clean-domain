@@ -5,7 +5,7 @@ import {
   type AnswerProps,
 } from '@/domain/forum/enterprise/entities/answer'
 
-export async function makeAnswer(override?: Partial<AnswerProps>, id?: string) {
+export function makeAnswer(override?: Partial<AnswerProps>, id?: string) {
   const answer = Answer.create(
     {
       authorId: new UniqueEntityID(faker.string.uuid()).toValue(),
