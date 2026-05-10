@@ -1,5 +1,5 @@
-import type { QuestionComment } from '../../enterprise/entities/question-comment'
-import type { QuestionCommentsRepository } from '../repositories/question-comments-repository'
+import type { QuestionComment } from '@/domain/forum/enterprise/entities/question-comment'
+import type { QuestionCommentsRepository } from '@/domain/forum/application/repositories/question-comments-repository'
 
 interface ListQuestionCommentsRequest {
   page: number
