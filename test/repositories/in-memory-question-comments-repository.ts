@@ -7,4 +7,20 @@ export class InMemoryQuestionCommentsRepository implements QuestionsCommentsRepo
   async create(question: QuestionComment): Promise<void> {
     this.items.push(question)
   }
+
+  async findById(id: string) {
+    const questionComment = this.items.find((i) => i.id === id)
+
+    if (!questionComment) {
+      return null
+    }
+
+    return questionComment
+  }
+
+  async delete(questionComment: QuestionComment): Promise<void> {
+    const itemIndex = this.items.findIndex((i) => i.id === questionComment.id)
+
+    this.items.splice(itemIndex, 1)
+  }
 }

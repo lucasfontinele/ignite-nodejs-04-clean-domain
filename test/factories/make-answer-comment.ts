@@ -1,17 +1,15 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import {
-  QuestionComment,
-  type QuestionCommentProps,
-} from '@/domain/forum/enterprise/entities/question-comment'
+import { AnswerComment } from '@/domain/forum/enterprise/entities/answer-comment'
+import type { QuestionCommentProps } from '@/domain/forum/enterprise/entities/question-comment'
 import { faker } from '@faker-js/faker'
 
-export function makeQuestionComment(
+export function makeAnswerComment(
   override?: Partial<QuestionCommentProps>,
   id?: string,
 ) {
-  return QuestionComment.create(
+  return AnswerComment.create(
     {
-      questionId: new UniqueEntityID(),
+      answerId: new UniqueEntityID(),
       authorId: new UniqueEntityID(),
       content: faker.lorem.sentence(),
       ...override,
