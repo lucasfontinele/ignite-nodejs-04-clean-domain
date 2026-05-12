@@ -1,13 +1,17 @@
 import type { Answer } from '@/domain/forum/enterprise/entities/answer'
 import type { AnswersRepository } from '../repositories/answers-repository'
+import { right, type Either } from '@/core/either'
 
 interface FindQuestionAnswersUseCaseRequest {
   page: number
 }
 
-interface FindQuestionsAnswersUseCaseResponse {
-  answers: Array<Answer>
-}
+type FindQuestionsAnswersUseCaseResponse = Either<
+  null,
+  {
+    answers: Array<Answer>
+  }
+>
 
 export class FindQuestionAnswersUseCase {
   constructor(private answersRepository: AnswersRepository) {}
@@ -23,8 +27,8 @@ export class FindQuestionAnswersUseCase {
       },
     )
 
-    return {
+    return right({
       answers,
-    }
+    })
   }
 }

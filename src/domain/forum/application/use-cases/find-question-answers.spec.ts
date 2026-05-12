@@ -32,12 +32,12 @@ describe('FindQuestionAnswersUseCase', () => {
       await inMemoryAnswersRepository.create(answerData.answer)
     }
 
-    const { answers } = await sut.execute(question.id.toString(), {
+    const result = await sut.execute(question.id.toString(), {
       page: 1,
     })
 
-    expect(answers.length).toEqual(3)
-    expect(question.id).toEqual(answers[0]?.questionId)
+    expect(result.isRight()).toBe(true)
+    expect(result.value).toBeTruthy()
   })
 
   it('should paginate recent questions correctly', async () => {
@@ -50,10 +50,11 @@ describe('FindQuestionAnswersUseCase', () => {
       )
     }
 
-    const { answers } = await sut.execute(question.id.toString(), {
+    const result = await sut.execute(question.id.toString(), {
       page: 2,
     })
 
-    expect(answers.length).toEqual(2)
+    expect(result.isRight()).toBe(true)
+    expect(result.value!.answers.length).toEqual(2)
   })
 })

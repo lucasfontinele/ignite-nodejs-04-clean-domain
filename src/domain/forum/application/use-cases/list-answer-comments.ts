@@ -1,13 +1,15 @@
 import type { AnswerComment } from '@/domain/forum/enterprise/entities/answer-comment'
 import type { AnswerCommentsRepository } from '@/domain/forum/application/repositories/answer-comments-repository'
+import { right, type Either } from '@/core/either'
 
 interface ListAnswerCommentsRequest {
   page: number
 }
 
-interface ListAnswerCommentsResponse {
-  answerComments: Array<AnswerComment>
-}
+type ListAnswerCommentsResponse = Either<
+  null,
+  { answerComments: Array<AnswerComment> }
+>
 
 export class ListAnswerComments {
   constructor(private answerCommentsRepository: AnswerCommentsRepository) {}
@@ -21,8 +23,8 @@ export class ListAnswerComments {
         page,
       })
 
-    return {
+    return right({
       answerComments,
-    }
+    })
   }
 }

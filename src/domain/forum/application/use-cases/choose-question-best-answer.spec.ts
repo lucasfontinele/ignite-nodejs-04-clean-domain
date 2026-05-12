@@ -5,6 +5,7 @@ import { makeQuestion } from 'test/factories/make-question'
 import { Slug } from '../../enterprise/entities/value-objects/slug'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { makeAnswer } from 'test/factories/make-answer'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
@@ -79,14 +80,13 @@ describe('Choose best answer', () => {
     await inMemoryQuestionsRepository.create(questionFromFactory)
     await inMemoryAnswersRepository.create(answerFromFactory)
 
-    await expect(() =>
-      sut.execute({
-        answerId: newAnswerId,
-        authorId: new UniqueEntityID('author-2').toString(),
-        questionId: newQuestionId,
-      }),
-    ).rejects.toThrow(
-      'Only the author of the question can choose the best answer',
-    )
+    const result = await sut.execute({
+      answerId: newAnswerId,
+      authorId: new UniqueEntityID('author-2').toString(),
+      questionId: newQuestionId,
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

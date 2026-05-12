@@ -13,20 +13,17 @@ describe('FindQuestionBySlugUseCase', () => {
   })
 
   it('should find a question by its slug', async () => {
-    const { question: newQuestion } = await makeQuestion({
+    const { question: newQuestion } = makeQuestion({
       slug: Slug.create('how-to-learn-nodejs'),
     })
 
     await inMemoryQuestionsRepository.create(newQuestion)
 
-    const { question } = await sut.execute({
+    const result = await sut.execute({
       slug: 'how-to-learn-nodejs',
     })
 
-    expect(question.authorId.toString()).toEqual(
-      newQuestion.authorId.toString(),
-    )
-    expect(question.content).toEqual(newQuestion.content)
-    expect(question.slug).toEqual(newQuestion.slug)
+    expect(result.isRight()).toBe(true)
+    expect(result.value?.question).toEqual(newQuestion)
   })
 })

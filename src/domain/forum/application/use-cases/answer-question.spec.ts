@@ -11,14 +11,15 @@ describe('Answer question', () => {
   })
 
   it('should be able to create an answer', async () => {
-    const answer = await answerQuestion.execute({
+    const result = await answerQuestion.execute({
       instructorId: 'instructor-1',
       questionId: 'question-1',
       content: 'This is an answer to the question.',
     })
 
-    expect(answer.content).toEqual('This is an answer to the question.')
-    expect(answer.authorId.toString()).toEqual('instructor-1')
-    expect(answer.questionId.toString()).toEqual('question-1')
+    expect(result.isRight()).toBeTruthy()
+    expect(result.value!.content).toEqual('This is an answer to the question.')
+    expect(result.value!.authorId.toString()).toEqual('instructor-1')
+    expect(result.value!.questionId.toString()).toEqual('question-1')
   })
 })

@@ -22,14 +22,14 @@ describe('ListRecentQuestions', () => {
       await inMemoryQuestionsRepository.create(questionData.question)
     }
 
-    const { questions } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
     })
 
     expect(inMemoryQuestionsRepository.items[0]?.id.toString()).toEqual(
       questionsData[1]?.question?.id.toString(),
     )
-    expect(questions.length).toEqual(3)
+    expect(result.value!.questions.length).toEqual(3)
   })
 
   it('should paginate recent questions correctly', async () => {
@@ -39,10 +39,10 @@ describe('ListRecentQuestions', () => {
       )
     }
 
-    const { questions } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
     })
 
-    expect(questions.length).toEqual(2)
+    expect(result.value!.questions.length).toEqual(2)
   })
 })

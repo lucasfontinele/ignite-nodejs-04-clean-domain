@@ -29,12 +29,15 @@ describe('ListAnswerComments', () => {
       await inMemoryAnswerCommentsRepository.create(item)
     }
 
-    const { answerComments } = await sut.execute(answer.id.toString(), {
+    const result = await sut.execute(answer.id.toString(), {
       page: 1,
     })
 
-    expect(answerComments.length).toEqual(3)
-    expect(answer.id.toString()).toEqual(answerComments[0]?.answerId.toString())
+    expect(result.isRight()).toBe(true)
+    expect(result.value!.answerComments.length).toEqual(3)
+    expect(answer.id.toString()).toEqual(
+      result.value!.answerComments[0]?.answerId.toString(),
+    )
   })
 
   it('should paginate recent answers correctly', async () => {
@@ -49,10 +52,10 @@ describe('ListAnswerComments', () => {
       )
     }
 
-    const { answerComments } = await sut.execute(question.id.toString(), {
+    const result = await sut.execute(question.id.toString(), {
       page: 2,
     })
 
-    expect(answerComments.length).toEqual(2)
+    expect(result.value!.answerComments.length).toEqual(2)
   })
 })

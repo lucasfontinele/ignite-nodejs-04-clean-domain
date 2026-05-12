@@ -29,13 +29,14 @@ describe('ListQuestionComments', () => {
       await inMemoryQuestionCommentsRepository.create(answerData)
     }
 
-    const { questionComments } = await sut.execute(question.id.toString(), {
+    const result = await sut.execute(question.id.toString(), {
       page: 1,
     })
 
-    expect(questionComments.length).toEqual(3)
+    expect(result.isRight()).toBe(true)
+    expect(result.value!.questionComments.length).toEqual(3)
     expect(question.id.toString()).toEqual(
-      questionComments[0]?.questionId.toString(),
+      result.value!.questionComments[0]?.questionId.toString(),
     )
   })
 
@@ -51,10 +52,11 @@ describe('ListQuestionComments', () => {
       )
     }
 
-    const { questionComments } = await sut.execute(question.id.toString(), {
+    const result = await sut.execute(question.id.toString(), {
       page: 2,
     })
 
-    expect(questionComments.length).toEqual(2)
+    expect(result.isRight()).toBe(true)
+    expect(result.value!.questionComments.length).toEqual(2)
   })
 })

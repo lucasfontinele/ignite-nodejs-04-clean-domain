@@ -1,13 +1,17 @@
 import type { QuestionComment } from '@/domain/forum/enterprise/entities/question-comment'
 import type { QuestionCommentsRepository } from '@/domain/forum/application/repositories/question-comments-repository'
+import { right, type Either } from '@/core/either'
 
 interface ListQuestionCommentsRequest {
   page: number
 }
 
-interface ListQuestionCommentsResponse {
-  questionComments: Array<QuestionComment>
-}
+type ListQuestionCommentsResponse = Either<
+  null,
+  {
+    questionComments: Array<QuestionComment>
+  }
+>
 
 export class ListQuestionComments {
   constructor(private questionCommentsRepository: QuestionCommentsRepository) {}
@@ -21,8 +25,8 @@ export class ListQuestionComments {
         page,
       })
 
-    return {
+    return right({
       questionComments,
-    }
+    })
   }
 }
