@@ -1,5 +1,7 @@
-import { makeQuestion } from 'test/factories/make-question'
-import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { makeQuestion } from '../../../../../test/factories/make-question'
+import { InMemoryQuestionsRepository } from '../../../../../test/repositories/in-memory-questions-repository'
+
 import { CreateQuestionUseCase } from './create-question'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
@@ -18,6 +20,7 @@ describe('Create question', () => {
       authorId: newQuestion.authorId.toString(),
       title: newQuestion.title,
       content: newQuestion.content,
+      attatchmentsIds: ['1', '2'],
     })
 
     expect(result.value!.question.title).toEqual(newQuestion.title)
@@ -26,5 +29,10 @@ describe('Create question', () => {
       newQuestion.authorId.toString(),
     )
     expect(result.value!.question.id).toBeTruthy()
+    expect(inMemoryQuestionsRepository.items[0]?.attatchments).toHaveLength(2)
+    expect(inMemoryQuestionsRepository.items[0]?.attatchments).toEqual([
+      expect.objectContaining({ attatchmentId: new UniqueEntityID('1') }),
+      expect.objectContaining({ attatchmentId: new UniqueEntityID('2') }),
+    ])
   })
 })

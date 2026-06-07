@@ -3,6 +3,7 @@ import type { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import type { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
 import { Slug } from './value-objects/slug'
+import type { QuestionAttatchment } from './question-attatchment'
 
 export interface QuestionProps {
   title: string
@@ -12,6 +13,7 @@ export interface QuestionProps {
   authorId: UniqueEntityID
   createdAt: Date
   updatedAt?: Date
+  attatchments: QuestionAttatchment[]
 }
 
 export class Question extends AggregateRoot<
@@ -39,6 +41,14 @@ export class Question extends AggregateRoot<
 
   get updatedAt() {
     return this.props.updatedAt
+  }
+
+  get attatchments() {
+    return this.props.attatchments
+  }
+
+  set attatchments(attatchments: QuestionAttatchment[]) {
+    this.props.attatchments = attatchments
   }
 
   get isNew(): boolean {
@@ -89,7 +99,7 @@ export class Question extends AggregateRoot<
   }
 
   static create(
-    props: Optional<QuestionProps, 'createdAt' | 'slug'>,
+    props: Optional<QuestionProps, 'createdAt' | 'slug' | 'attatchments'>,
     id?: UniqueEntityID,
   ) {
     const question = new Question(
@@ -97,6 +107,7 @@ export class Question extends AggregateRoot<
         ...props,
         createdAt: new Date(),
         slug: props.slug ?? Slug.createFromText(props.title),
+        attatchments: props.attatchments ?? [],
       },
       id,
     )
