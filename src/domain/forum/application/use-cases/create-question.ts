@@ -3,6 +3,7 @@ import { Question } from '@/domain/forum/enterprise/entities/question'
 import type { QuestionsRepository } from '@/domain/forum/application/repositories/question-repository'
 import { right, type Either } from '@/core/either'
 import { QuestionAttatchment } from '../../enterprise/entities/question-attatchment'
+import { QuestionAttatchmentList } from '../../enterprise/entities/question-attatchment-list'
 
 interface CreateQuestionUseCaseRequest {
   authorId: string
@@ -40,7 +41,7 @@ export class CreateQuestionUseCase {
       }),
     )
 
-    question.attatchments = attatchments
+    question.attatchments = new QuestionAttatchmentList(attatchments)
 
     await this.questionsRepository.create(question)
 

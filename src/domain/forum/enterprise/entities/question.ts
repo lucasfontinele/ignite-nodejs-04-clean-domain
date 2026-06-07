@@ -2,8 +2,8 @@ import { AggregateRoot } from '@/core/entities/agreggate-root'
 import type { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import type { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
+import { QuestionAttatchmentList } from './question-attatchment-list'
 import { Slug } from './value-objects/slug'
-import type { QuestionAttatchment } from './question-attatchment'
 
 export interface QuestionProps {
   title: string
@@ -13,7 +13,7 @@ export interface QuestionProps {
   authorId: UniqueEntityID
   createdAt: Date
   updatedAt?: Date
-  attatchments: QuestionAttatchment[]
+  attatchments: QuestionAttatchmentList
 }
 
 export class Question extends AggregateRoot<
@@ -47,7 +47,7 @@ export class Question extends AggregateRoot<
     return this.props.attatchments
   }
 
-  set attatchments(attatchments: QuestionAttatchment[]) {
+  set attatchments(attatchments: QuestionAttatchmentList) {
     this.props.attatchments = attatchments
   }
 
@@ -107,7 +107,7 @@ export class Question extends AggregateRoot<
         ...props,
         createdAt: new Date(),
         slug: props.slug ?? Slug.createFromText(props.title),
-        attatchments: props.attatchments ?? [],
+        attatchments: props.attatchments ?? new QuestionAttatchmentList(),
       },
       id,
     )
