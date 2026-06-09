@@ -1,11 +1,13 @@
 import { Entity } from '@/core/entities/entity'
 import type { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import type { Optional } from '@/core/types/optional'
+import { AnswerAttatchmentList } from './answer-attatchment-list'
 
 export interface AnswerProps {
   content: string
   authorId: string
   questionId: string
+  attatchments: AnswerAttatchmentList
   createdAt: Date
   updatedAt?: Date
 }
@@ -21,6 +23,10 @@ export class Answer extends Entity<AnswerProps> {
 
   get questionId() {
     return this.props.questionId
+  }
+
+  get attatchments() {
+    return this.props.attatchments
   }
 
   get createdAt() {
@@ -48,6 +54,11 @@ export class Answer extends Entity<AnswerProps> {
     this.touch()
   }
 
+  set attatchments(attatchments: AnswerAttatchmentList) {
+    this.props.attatchments = attatchments
+    this.touch()
+  }
+
   protected constructor(props: AnswerProps, id?: UniqueEntityID) {
     super(props, id)
   }
@@ -59,6 +70,7 @@ export class Answer extends Entity<AnswerProps> {
     const answer = new Answer(
       {
         ...props,
+        attatchments: props.attatchments || new AnswerAttatchmentList(),
         createdAt: new Date(),
         updatedAt: props.updatedAt || new Date(),
       },
